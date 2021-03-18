@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block head %}
+
+{% endblock %}
+
+{% block body %}
+<div class="content">
+    <h1 align="center">OVA</h1>
+    <form action="/create_image/ova" method="POST">
+        <label for="Trunk"> Tick if building from trunk.</label>
+        <input type="checkbox" id="Trunk" name="trunk" value="Trunk"> <br><br>
+        <label for="Trunk"> Tick if building from branch. </label>
+        <input type="checkbox" id="branch" name="branch" value="Branch" >
+        <input type="text" id="branch_number" name="branch_number"><br><br>
+        <label for="Trunk"> Tick if building for production.</label>
+        <input type="checkbox" id="production" name="production" value="Production"><br><br>
+        <button type="button">Build</button>
+    </form>
+    <script type=text/javascript src="{{ url_for('static', filename='Jqeuery-v3.6.js') }}"></script>
+    <script>
+        $(function show () {
+            $('input[name="branch_number"]').hide();
+            $('input[name="branch"]').on('click', function () {
+                if ($(this).prop('checked')) {
+                    $('input[name="branch_number"]').fadeIn();
+                    $('input[name="submit"]').fadeIn();
+                } else {
+                    $('input[name="branch_number"]').hide();
+                }
+            });
+        });
+    </script>
+</div>
+{% endblock %}
