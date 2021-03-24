@@ -1,6 +1,12 @@
-from flask import Flask, render_template, request
-app = Flask(__name__)
+from flask import Flask, render_template, Request
+from flask_sqlalchemy import SQLAlchemy
 
+app = Flask(__name__)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///ffs.db'
+db = SQLAlchemy(app)
+
+class Todo(db.Model):
+    id =
 
 @app.route('/')
 def index():
@@ -14,9 +20,14 @@ def provisioning_platform():
 
 @app.route('/create_image/ova', methods=['GET', 'POST'])
 def create_ova():
-    if request == 'POST':
-        is_trunk = request
-    return render_template('ova.html')
+    if Request.method == 'post':
+        prod = Request.form['production']
+        trunk = Request.form['trunk']
+        branch = Request.form['branch']
+        branch_number = Request.form['branch_number']
+        return [prod, trunk , branch, branch_number]
+    else:
+        return render_template('ova.html')
 
 
 # Press the green button in the gutter to run the script.
