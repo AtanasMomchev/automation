@@ -1,16 +1,31 @@
 from flask import Flask, render_template, Request
-from flask_sqlalchemy import SQLAlchemy
+from database import db_session
+from models.User import User
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///ffs.db'
-db = SQLAlchemy(app)
+app.debug=True
+admin = User("admin", "Q!w2e3r4")
+db_session.add(admin)
+db_session.commit()
 
-class Todo(db.Model):
-    id =
+
+@app.teardown_appcontext
+def shutdown_session(exception=None):
+    db_session.remove()
+
 
 @app.route('/')
 def index():
     return render_template('index.html')
+
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if Request.method == 'post':
+        username = Request.form['username']
+        password = Request.form['password']
+    else:
+        return render_template('login.html')
 
 
 @app.route('/create_image')
@@ -34,4 +49,3 @@ def create_ova():
 if __name__ == '__main__':
     app.run(debug=True)
 
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
