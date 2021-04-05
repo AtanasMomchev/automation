@@ -10,4 +10,5 @@ class Secrets:
         return pass_hash
 
     def check_password(self, pw_hash, password):
+        print(pw_hash, password)
         return self.bcrypt.check_password_hash(pw_hash, password)
