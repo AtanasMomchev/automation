@@ -1,6 +1,6 @@
 from sqlalchemy import Column, Integer, String
 from database import Base
-from secrets import Secrets
+from pass_manager import Secrets
 
 
 class User(Base):
