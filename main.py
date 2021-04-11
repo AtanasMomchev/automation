@@ -14,7 +14,7 @@ app.config.update(SECRET_KEY=key)
 app.debug = True
 init_db()
 if not User.query.filter(User.name == 'admin').first():
-    u = User("admin", "Q!w2e3r4")
+    u = User("admin", "Q!w2e3r4", "Admins")
     db_session.add(u)
     db_session.comit()
 
@@ -85,6 +85,16 @@ def provisioning_platform():
 def shutdown_session(exception=None):
     db_session.remove()
 
+
+def add_user(username, password, group):
+    user = User(username, password, group)
+    db_session.add(user)
+    db_session.comit()
+
+
+# def change_password(username, old_pass, new_pass):
+#     db_user = User.query.filter(User.name == username).update({"password": })
+#     db_user.
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
