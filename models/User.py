@@ -8,11 +8,13 @@ class User(Base):
     id = Column(Integer, primary_key=True)
     name = Column(String(50), unique=True)
     password = Column(String(50))
+    group = Column(String(50))
     secret = Secrets()
 
-    def __init__(self, name, pass_word):
+    def __init__(self, name, pass_word, group):
         self.name = name
         self.password = self.secret.hash_password(pass_word, 14)
+        self.group = group
 
     def __repr__(self):
         return '<User %r>' % self.name
