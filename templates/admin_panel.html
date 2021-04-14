@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block head %}
+
+{% endblock %}
+
+{% block body %}
+<div class="content">
+    <h1>Admin Panel</h1>
+    <form action="/admin_panel" method="post">
+        <label><strong>Change password / </strong></label>
+        <label for="username">Username: </label>
+        <input type="text" id="username">
+        <label for="new_password">New Password: </label>
+        <input type="password" id="new_password">
+        <button type="submit" name="button" value="change">Change</button> <br><br>
+        <label><strong>Create user / </strong></label>
+        <label for="new_username">Username: </label>
+        <input type="text" id="new_username" name="new_username">
+        <label for="password">Password: </label>
+        <input type="password" id="password" name="password">
+        <button type="submit" name="button" value="create">Create</button><br><br><br><br>
+    </form>
+    <table align="center">
+        <th>Username</th>
+        <th>Group</th>
+        {% for user in users %}
+            <tr>
+                <td>{{ user.name }}</td>
+                <td>{{ user.group }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+</div>
+{% endblock %}

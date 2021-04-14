@@ -16,7 +16,7 @@ init_db()
 if not User.query.filter(User.name == 'admin').first():
     u = User("admin", "Q!w2e3r4", "Admins")
     db_session.add(u)
-    db_session.comit()
+    db_session.commit()
 
 
 def login_required(func):
@@ -34,8 +34,28 @@ def login_required(func):
 def before_request():
     g.user = None
     if 'user_id' in session:
-        user = User.query.filter(User.name == session['user_id'])
+        user = User.query.filter(User.name == session['user_id']).first()
         g.user = user
+
+
+@app.route('/admin_panel', methods=['GET', 'POST'])
+@login_required
+def admin_panel():
+    if request.method == 'POST':
+        if request.form['button'] == "create":
+            username = request.form['new_username']
+            password = request.form['password']
+            group = "Users"
+            user = User(username, password, group)
+            db_session.add(user)
+            db_session.commit()
+        elif request.form['button'] == "change":
+            username = request.form['username']
+            password = request.form['new_password']
+            user = User.query.filter(User.name == username).first()
+            user.password = password
+        return redirect(url_for('index'))
+    return render_template('admin_panel.html')
 
 
 @app.route('/')
